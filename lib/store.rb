@@ -73,7 +73,8 @@ module RabbitExample
     def extract_credentials(vcap_services)
       vcap_services.each do |service_key, service|
         service.each do |element|
-          return element["credentials"] if element["tags"].include?("rabbitmq")
+#          return element["credentials"] if element["tags"].include?("rabbitmq")
+          return element["credentials"]
         end
       end
 
