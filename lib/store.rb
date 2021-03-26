@@ -10,7 +10,7 @@ module RabbitExample
     end
 
     def write(msg)
-      @sampled_uri = amqp_credentials['uris'].sample || amqp_credentials['uri']
+      @sampled_uri = amqp_credentials['uri']
       connection.start
       queue.publish msg, persistent: true
     rescue => e
@@ -21,7 +21,7 @@ module RabbitExample
     end
 
     def read
-      @sampled_uri = amqp_credentials['uris'].sample || amqp_credentials['uri']
+      @sampled_uri = amqp_credentials['uri']
       connection.start
       queue.pop[2]
     rescue => e
