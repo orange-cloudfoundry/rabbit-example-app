@@ -18,6 +18,10 @@ module RabbitExample
       erb(:index)
     end
 
+    get '/ping' do
+      "pong"
+    end
+
     get '/write' do
       start_websocket do |ws|
         producer = Producer.new(ws)

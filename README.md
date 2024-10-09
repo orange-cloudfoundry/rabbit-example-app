@@ -27,6 +27,12 @@ bundle exec guard
 
 Usage
 =====
+To test application availability
+
+```
+curl -sSLf http://test-app.<YOUR_DOMAIN>/ping
+>pong
+```
 
 To write messages to the queue:
 
