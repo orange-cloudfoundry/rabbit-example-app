@@ -1,0 +1,82 @@
+name: "Build using cnb buildpack"
+permissions:
+  packages: write
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - "v?[0-9]+.[0-9]+.[0-9]+*"
+env:
+  CNB_IMAGE_NAME: rabbit-cnb-app
+  SERVICE_NAME: 'rabbit'
+  SERVICE_IMAGE: "rabbitmq:3-management"
+  SERVICE_HEALTH_CMD: "rabbitmqctl node_health_check"
+  SERVICE_PORT: 5672
+  SERVICE_ADMIN_PORT: 15672
+  SERVICE_USERNAME: '22032e25-4aba-417f-a394-8bbd78d920cd'
+  SERVICE_PASSWORD: 'StbQ4EovUpwQjD0cT1Hr7PKBG'
+  SERVICE_HOST: "dynamically_generated"
+  DATABASE_NAME: my-rabbit-db-sample
+  DEBUG: 0
+
+jobs:
+  package-app:
+    name: "Package ${{ github.repository }} as CNB app"
+    runs-on: ubuntu-latest
+
+    steps:
+      -
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
+        with:
+          # Number of commits to fetch. 0 indicates all history for all branches and tags.
+          # Default: 1
+          fetch-depth: 1
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Setup pack for ${{ github.repository }}
+        uses: buildpacks/github-actions/setup-pack@v5.0.0
+      -
+        name: Packaging app from ${{ github.repository }} pushed by ${{ github.actor }}
+        shell: bash
+        run: |
+          echo "Pack Build ${{env.CNB_IMAGE_NAME}} (${{github.repository}})"
+          pack build ${{env.CNB_IMAGE_NAME}}
+          echo "Pack Inspect ${{env.CNB_IMAGE_NAME}} (${{github.repository}})"
+          pack inspect ${{env.CNB_IMAGE_NAME}}
+      -
+        name: Testing app
+        shell: bash
+        run: |
+          source ./setup-prerequisite.sh
+          ./run-tests.sh
+      -
+        name: Tag version ${{github.ref_name}}
+        if: github.ref_type == 'tag'
+        run: |
+          docker tag ${{env.CNB_IMAGE_NAME}}:latest ghcr.io/${{ github.repository }}:${{github.ref_name}}
+      -
+        name: Tag with common data
+        run: |
+          docker tag ${{env.CNB_IMAGE_NAME}}:latest ghcr.io/${{ github.repository }}:latest
+          docker tag ${{env.CNB_IMAGE_NAME}}:latest ghcr.io/${{ github.repository }}:${{github.sha}}
+          echo "cleanup built image"
+          docker image rm ${{env.CNB_IMAGE_NAME}}:latest
+          echo "dump existing images"
+          docker images
+      -
+        name: Publish ghcr.io/${{ github.repository }}
+        run: |
+          echo "publish all tags"
+          docker push --all-tags ghcr.io/${{ github.repository }}
+          
+          

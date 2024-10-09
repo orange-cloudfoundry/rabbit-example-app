@@ -1,0 +1,8 @@
+[_]
+schema-version = "0.2"
+id = "com.orange-cloudfoundry.sample-apps.rabbit"
+name = "RabbitMQ sample app"
+#version = "1.0.0"
+
+[io.buildpacks]
+builder = "paketobuildpacks/builder-jammy-base"

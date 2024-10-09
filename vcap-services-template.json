@@ -1,0 +1,109 @@
+{
+  "rabbitmq-dedicated": [
+    {
+      "binding_guid": "${SERVICE_USERNAME}",
+      "binding_name": null,
+      "credentials": {
+        "dashboard_url": "https://${SERVICE_HOST}",
+        "hostname": "${SERVICE_HOST}",
+        "hostnames": [
+          "${SERVICE_HOST}"
+        ],
+        "http_api_uri": "https://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}/api/",
+        "http_api_uris": [
+          "https://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}/api/"
+        ],
+        "password": "${SERVICE_PASSWORD}",
+        "protocols": {
+          "amqp": {
+            "host": "${SERVICE_HOST}",
+            "hosts": [
+              "${SERVICE_HOST}"
+            ],
+            "password": "${SERVICE_PASSWORD}",
+            "port": ${SERVICE_PORT},
+            "ssl": false,
+            "uri": "amqp://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:${SERVICE_PORT}/${DATABASE_NAME}",
+            "uris": [
+              "amqp://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:${SERVICE_PORT}/${DATABASE_NAME}"
+            ],
+            "username": "${SERVICE_USERNAME}",
+            "vhost": "${DATABASE_NAME}"
+          },
+          "management": {
+            "host": "${SERVICE_HOST}",
+            "hosts": [
+              "${SERVICE_HOST}"
+            ],
+            "password": "${SERVICE_PASSWORD}",
+            "path": "/api/",
+            "port": ${SERVICE_ADMIN_PORT},
+            "ssl": false,
+            "uri": "http://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:${SERVICE_ADMIN_PORT}/api/",
+            "uris": [
+              "http://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:${SERVICE_ADMIN_PORT}/api/"
+            ],
+            "username": "${SERVICE_USERNAME}"
+          },
+          "mqtt": {
+            "host": "${SERVICE_HOST}",
+            "hosts": [
+              "${SERVICE_HOST}"
+            ],
+            "password": "${SERVICE_PASSWORD}",
+            "port": 1883,
+            "ssl": false,
+            "uri": "mqtt://${DATABASE_NAME}%3A${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:1883",
+            "uris": [
+              "mqtt://${DATABASE_NAME}%3A${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:1883"
+            ],
+            "username": "${DATABASE_NAME}:${SERVICE_USERNAME}"
+          },
+          "stomp": {
+            "host": "${SERVICE_HOST}",
+            "hosts": [
+              "${SERVICE_HOST}"
+            ],
+            "password": "${SERVICE_PASSWORD}",
+            "port": 61613,
+            "ssl": false,
+            "uri": "stomp://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:61613",
+            "uris": [
+              "stomp://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}:61613"
+            ],
+            "username": "${SERVICE_USERNAME}",
+            "vhost": "${DATABASE_NAME}"
+          }
+        },
+        "ssl": false,
+        "uri": "amqp://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}/${DATABASE_NAME}",
+        "uris": [
+          "amqp://${SERVICE_USERNAME}:${SERVICE_PASSWORD}@${SERVICE_HOST}/${DATABASE_NAME}"
+        ],
+        "username": "${SERVICE_USERNAME}",
+        "vhost": "${DATABASE_NAME}"
+      },
+      "instance_guid": "${DATABASE_NAME}",
+      "instance_name": "cf-rabbit-smoketest-1727437284",
+      "label": "rabbitmq-dedicated",
+      "name": "cf-rabbit-smoketest-1727437284",
+      "plan": "default",
+      "provider": null,
+      "syslog_drain_url": null,
+      "tags": [
+        "rabbitmq",
+        "rabbit",
+        "messaging",
+        "message-queue",
+        "amqp",
+        "stomp"
+      ],
+      "volume_mounts": []
+    }
+  ]
+}
+
+
+
+
+
